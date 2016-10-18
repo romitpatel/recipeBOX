@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<title>Recipe Box!</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="app.js"></script>
+<script src="controller.js"></script>
+<script src="directive.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.2.0.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css"
+	rel="stylesheet">
+<script src="angular-ui-bootstrap-modal.js"></script>
+
+<script>
+$(document).ready(function()
+		{
+		    $('.modal').on('hidden.bs.modal', function(e)
+		    { 
+		        $(this).removeData();
+		    }) ;
+		});
+</script>
+</head>
+<body>
+
+	<div class="container" ng-controller="DemoController">
+		<div class="page-header">
+			<h1>My Recipes</h1>
+
+
+			<add-recipe></add-recipe>
+
+
+		</div>
+
+
+		<accordion> <accordion-group
+			ng-repeat="recipe in RecipeBook" heading="{{recipe.title}}"
+			is-open="recipe.open">
+		<table>
+			<tr ng-repeat="ingredient in recipe.ingredients">
+				<td>{{ingredient}}</td>
+			</tr>
+		</table>
+
+
+		<edit-recipe></edit-recipe>
+		<button ng-click="delete(recipe)">Delete</button>
+
+            <!--<button ng-click="edit()">Edit</button>-->
+
+		 </accordion-group> </accordion>
+
+
+
+		<div modal="myModal" class="modal">
+			<div class="modal-header">Add new Recipe</div>
+			<form name="myForm">
+				<div class="modal-body">
+
+					<label>Recipe name : <input type="text" ng-model="recipe.title" class="form-control"></label><br />
+					<label>Recipe ingredients : <input type="text" ng-model="recipe.ingredients" class="form-control">
+					</label><br />
+
+				</div>
+
+
+				<div class="modal-footer">
+					<button ng-click="add(recipe)" class="btn btn-sm btn-primary">Ok</button>
+					<button ng-click="closeModal()" class="btn btn-sm btn-danger">Cancel</button>
+				</div>
+			</form>
+		</div>
+
+
+
+		<div modal="editModal" class="modal">
+			<div class="modal-header">Edit Recipe</div>
+			<form name="myForm">
+				<div class="modal-body">
+
+					<label>Recipe name : <input type="text" ng-model="toEdit.title" class="form-control"></label><br />
+					<label>Recipe ingredients : <input type="text" ng-model="toEdit.ingredients"  class="form-control">
+					</label><br />
+
+				</div>
+
+
+				<div class="modal-footer">
+					<button ng-click="edit(toEdit)" class="btn btn-sm btn-primary">Ok</button>
+					<button ng-click="closeModal()" class="btn btn-sm btn-danger">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+</body>
+</html>
